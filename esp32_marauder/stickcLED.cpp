@@ -3,12 +3,12 @@
 void stickcLED::RunSetup() {
     pinMode(STICKC_LED_PIN, OUTPUT);
 
-if (!settings_obj.loadSetting<bool>("EnableLED")) {
-    digitalWrite(STICKC_LED_PIN, HIGH);
-    return;
-}
+  if (!settings_obj.loadSetting<bool>("EnableLED")) {
+      digitalWrite(STICKC_LED_PIN, HIGH);
+      return;
+  }
 
-delay(50);
+  delay(50);
 
   digitalWrite(STICKC_LED_PIN, LOW);
   delay(500);
@@ -21,6 +21,9 @@ delay(50);
   digitalWrite(STICKC_LED_PIN, LOW);
   delay(500);
   digitalWrite(STICKC_LED_PIN, HIGH);
+
+  if (settings_obj.loadSetting<bool>("KeepLEDDisabled"))
+    digitalWrite(STICKC_LED_PIN, LOW);
 }
 
 void stickcLED::attackLED() {
@@ -45,7 +48,7 @@ void stickcLED::offLED() {
   if (!settings_obj.loadSetting<bool>("EnableLED"))
     return;
   
-  digitalWrite(STICKC_LED_PIN, HIGH);
+  digitalWrite(STICKC_LED_PIN, LOW);
 }
 
 void stickcLED::main() {

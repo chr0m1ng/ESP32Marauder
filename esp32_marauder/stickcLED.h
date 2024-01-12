@@ -8,7 +8,12 @@
 
 #include <Arduino.h>
 
-#define STICKC_LED_PIN 10
+#ifdef MARAUDER_M5STICKC
+  #define STICKC_LED_PIN 10
+#elif defined(MARAUDER_M5STICKC_PLUS2)
+  #define STICKC_LED_PIN 19
+#endif
+
 
 extern Settings settings_obj;
 
