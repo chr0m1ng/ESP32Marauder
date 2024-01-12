@@ -39,7 +39,7 @@ https://www.online-utility.org/image/convert/to/XBM
   #include "flipperLED.h"
 #elif defined(XIAO_ESP32_S3)
   #include "xiaoLED.h"
-#elif defined(MARAUDER_M5STICKC)
+#elif defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKC_PLUS2)
   #include "stickcLED.h"
 #else
   #include "LedInterface.h"
@@ -123,7 +123,7 @@ CommandLine cli_obj;
   flipperLED flipper_led;
 #elif defined(XIAO_ESP32_S3)
   xiaoLED xiao_led;
-#elif defined(MARAUDER_M5STICKC)
+#elif defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKC_PLUS2)
   stickcLED stickc_led;
 #else
   LedInterface led_obj;
@@ -165,6 +165,11 @@ void backlightOff() {
 
 void setup()
 {
+  #ifdef MARAUDER_M5STICKC_PLUS2
+    pinMode(4, OUTPUT);
+    digitalWrite(4, HIGH);
+  #endif
+  
   #ifdef MARAUDER_M5STICKC
     axp192_obj.begin();
   #endif
@@ -345,7 +350,7 @@ void setup()
     flipper_led.RunSetup();
   #elif defined(XIAO_ESP32_S3)
     xiao_led.RunSetup();
-  #elif defined(MARAUDER_M5STICKC)
+  #elif defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKC_PLUS2)
     stickc_led.RunSetup();
   #else
     led_obj.RunSetup();
@@ -356,6 +361,19 @@ void setup()
 
     delay(500);
   #endif
+
+  if (settings_obj.loadSetting<bool>("KeepLEDDisabled")) {
+    // Turn LED off
+    #ifdef MARAUDER_FLIPPER
+      flipper_led.offLED();
+    #elif defined(XIAO_ESP32_S3)
+      xiao_led.offLED();
+    #elif defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKC_PLUS2)
+      stickc_led.offLED();
+    #else
+      led_obj.setMode(MODE_OFF);
+    #endif
+  }
 
   #ifdef HAS_GPS
     gps_obj.begin();
@@ -443,7 +461,7 @@ void loop()
     flipper_led.main();
   #elif defined(XIAO_ESP32_S3)
     xiao_led.main();
-  #elif defined(MARAUDER_M5STICKC)
+  #elif defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKC_PLUS2)
     stickc_led.main();
   #else
     led_obj.main(currentTime);

@@ -287,6 +287,12 @@ bool Settings::createDefaultSettings(fs::FS &fs) {
   jsonBuffer["Settings"][3]["value"] = true;
   jsonBuffer["Settings"][3]["range"]["min"] = false;
   jsonBuffer["Settings"][3]["range"]["max"] = true;
+  
+  jsonBuffer["Settings"][4]["name"] = "KeepLEDDisabled";
+  jsonBuffer["Settings"][4]["type"] = "bool";
+  jsonBuffer["Settings"][4]["value"] = false;
+  jsonBuffer["Settings"][4]["range"]["min"] = true;
+  jsonBuffer["Settings"][4]["range"]["max"] = false;
 
   //jsonBuffer.printTo(settingsFile);
   if (serializeJson(jsonBuffer, settingsFile) == 0) {

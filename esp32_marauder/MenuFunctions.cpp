@@ -925,7 +925,7 @@ void MenuFunctions::updateStatusBar()
 {
   display_obj.tft.setTextSize(1);
   
-  #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC)
+  #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKC_PLUS2)
     display_obj.tft.setFreeFont(NULL);
   #endif
   
@@ -967,7 +967,7 @@ void MenuFunctions::updateStatusBar()
       display_obj.tft.drawString("CH: " + (String)wifi_scan_obj.set_channel, 50, 0, 2);
     #endif
 
-    #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC)
+    #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKC_PLUS2)
       display_obj.tft.drawString("CH: " + (String)wifi_scan_obj.set_channel, TFT_WIDTH/4, 0, 1);
     #endif
   }
@@ -981,7 +981,7 @@ void MenuFunctions::updateStatusBar()
       display_obj.tft.drawString((String)wifi_scan_obj.free_ram + "B", 100, 0, 2);
     #endif
 
-    #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC)
+    #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKC_PLUS2)
       display_obj.tft.drawString((String)wifi_scan_obj.free_ram + "B", TFT_WIDTH/1.75, 0, 1);
     #endif
   }
@@ -1010,16 +1010,20 @@ void MenuFunctions::updateStatusBar()
                                 the_color);
   #endif
 
-  #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC)
+  #ifdef MARAUDER_MINI
     display_obj.tft.setTextColor(the_color, STATUSBAR_COLOR);
     display_obj.tft.drawString("SD", TFT_WIDTH - 12, 0, 1);
+  #endif
+  #if defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKC_PLUS2)
+    display_obj.tft.setTextColor(the_color, STATUSBAR_COLOR);
+    display_obj.tft.drawString("SD", TFT_HEIGHT - (CHAR_WIDTH * 2), 0, 1);
   #endif
 }
 
 void MenuFunctions::drawStatusBar()
 {
   display_obj.tft.setTextSize(1);
-  #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC)
+  #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKC_PLUS2)
     display_obj.tft.setFreeFont(NULL);
   #endif
   display_obj.tft.fillRect(0, 0, 240, STATUS_BAR_WIDTH, STATUSBAR_COLOR);
@@ -1063,6 +1067,9 @@ void MenuFunctions::drawStatusBar()
   #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC)
     display_obj.tft.drawString("CH: " + (String)wifi_scan_obj.set_channel, TFT_WIDTH/4, 0, 1);
   #endif
+  #ifdef MARAUDER_M5STICKC_PLUS2
+    display_obj.tft.drawString("CH: " + (String)wifi_scan_obj.set_channel, 0, 0, 1);
+  #endif
 
   // RAM Stuff
   wifi_scan_obj.freeRAM();
@@ -1072,7 +1079,7 @@ void MenuFunctions::drawStatusBar()
     display_obj.tft.drawString((String)wifi_scan_obj.free_ram + "B", 100, 0, 2);
   #endif
 
-  #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC)
+  #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKC_PLUS2)
     display_obj.tft.drawString((String)wifi_scan_obj.free_ram + "B", TFT_WIDTH/1.75, 0, 1);
   #endif
 
@@ -1099,9 +1106,13 @@ void MenuFunctions::drawStatusBar()
                                 the_color);
   #endif
 
-  #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC)
+  #ifdef MARAUDER_MINI
     display_obj.tft.setTextColor(the_color, STATUSBAR_COLOR);
     display_obj.tft.drawString("SD", TFT_WIDTH - 12, 0, 1);
+  #endif
+  #if defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKC_PLUS2)
+    display_obj.tft.setTextColor(the_color, STATUSBAR_COLOR);
+    display_obj.tft.drawString("SD", TFT_HEIGHT - (CHAR_WIDTH * 2), 0, 1);
   #endif
 }
 
@@ -1847,7 +1858,7 @@ void MenuFunctions::displayCurrentMenu(uint8_t start_index)
       display_obj.tft.setFreeFont(MENU_FONT);
     #endif
 
-    #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC)
+    #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKC_PLUS2)
       display_obj.tft.setFreeFont(NULL);
       display_obj.tft.setTextSize(1);
     #endif
@@ -1870,7 +1881,7 @@ void MenuFunctions::displayCurrentMenu(uint8_t start_index)
 
       #endif
 
-      #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC)
+      #if defined(MARAUDER_MINI) || defined(MARAUDER_M5STICKC) || defined(MARAUDER_M5STICKC_PLUS2)
         if ((current_menu->selected == i) || (current_menu->list->get(i).selected))
           display_obj.key[i - start_index].drawButton(true, current_menu->list->get(i).name);
         else 
